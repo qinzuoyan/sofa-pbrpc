@@ -12,8 +12,8 @@ PREFIX=./output
 # Uncomment exactly one of the lines labelled (A), (B), and (C) below
 # to switch between compilation modes.
 #
-OPT ?= -O2        # (A) Production use (optimized mode)
-# OPT ?= -g2      # (B) Debug mode, generate full line-level debugging symbols
+# OPT ?= -O2        # (A) Production use (optimized mode)
+OPT ?= -g2      # (B) Debug mode, generate full line-level debugging symbols
 # OPT ?= -O2 -g2  # (C) Profiling mode: opt, but generate debugging symbols
 #-----------------------------------------------
 
@@ -67,17 +67,18 @@ endif
 #-----------------------------------------------
 
 CXX=g++
-INCPATH=-Isrc -I$(BOOST_HEADER_DIR) -I$(PROTOBUF_DIR)/include -I$(SNAPPY_DIR)/include -I$(ZLIB_DIR)/include
+INCPATH=-Isrc -I$(BOOST_DIR)/include -I$(PROTOBUF_DIR)/include -I$(SNAPPY_DIR)/include -I$(ZLIB_DIR)/include
 CXXFLAGS += $(OPT) -pipe -W -Wall -fPIC -D_GNU_SOURCE -D__STDC_LIMIT_MACROS -DHAVE_SNAPPY $(INCPATH)
 
-LDFLAGS += -L$(ZLIB_DIR)/lib -L$(PROTOBUF_DIR)/lib/ -L$(SNAPPY_DIR)/lib/ -lprotobuf -lsnappy -lpthread -lz
+LDFLAGS += -L$(BOOST_DIR)/lib -L$(PROTOBUF_DIR)/lib/ -L$(SNAPPY_DIR)/lib/ -L$(ZLIB_DIR)/lib -lboost_system -lprotobuf -lsnappy -lz -lpthread
 
 .PHONY: check_depends build rebuild install clean
 
-all: build
+all: check_depends build
 
 check_depends:
-	@if [ ! -f "$(BOOST_HEADER_DIR)/boost/smart_ptr.hpp" ]; then echo "ERROR: need boost header"; exit 1; fi
+	@if [ ! -f "$(BOOST_DIR)/include/boost/smart_ptr.hpp" ]; then echo "ERROR: need boost header"; exit 1; fi
+	@if [ ! -f "$(BOOST_DIR)/lib/libboost_system.a" ]; then echo "ERROR: need boost lib"; exit 1; fi
 	@if [ ! -f "$(PROTOBUF_DIR)/include/google/protobuf/message.h" ]; then echo "ERROR: need protobuf header"; exit 1; fi
 	@if [ ! -f "$(PROTOBUF_DIR)/lib/libprotobuf.a" ]; then echo "ERROR: need protobuf lib"; exit 1; fi
 	@if [ ! -f "$(SNAPPY_DIR)/include/snappy.h" ]; then echo "ERROR: need snappy header"; exit 1; fi

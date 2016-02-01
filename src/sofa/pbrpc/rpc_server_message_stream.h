@@ -239,7 +239,8 @@ private:
 #endif
             }
 
-            close(error.message());
+            //close(error.message());
+            close("EOF");
             return;
         }
 

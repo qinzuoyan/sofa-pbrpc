@@ -2,7 +2,7 @@
 ## Modified this file to specify depending library path.
 ##
 ## Depending libs:
-##   boost-1.53.0 (only need header)
+##   boost-1.54.0
 ##   protobuf-2.4.1
 ##   snappy
 ##   zlib
@@ -13,10 +13,11 @@
 ## Boost header directory.
 ##
 ## Check file exist:
-##   $(BOOST_HEADER_DIR)/boost/smart_ptr.hpp
+##   $(BOOST_DIR)/include/boost/smart_ptr.hpp
+##   $(BOOST_DIR)/lib/libboost_system.a
 ##
-#BOOST_HEADER_DIR=/home/users/qinzuoyan01/libs/boost_1_53_0
-BOOST_HEADER_DIR=/usr
+#BOOST_DIR=/home/users/qinzuoyan01/libs/boost_1_59_0/output
+BOOST_DIR=/home/work/software/boost_1_59_0/output
 ################################################################
 
 ################################################################
@@ -28,7 +29,7 @@ BOOST_HEADER_DIR=/usr
 ##   $(PROTOBUF_DIR)/lib/libprotobuf.a 
 ##
 #PROTOBUF_DIR=/home/users/qinzuoyan01/libs/protobuf-2.4.1/output
-PROTOBUF_DIR=/usr/local
+PROTOBUF_DIR=/home/work/software/protobuf-2.4.1/output
 ################################################################
 
 ################################################################
